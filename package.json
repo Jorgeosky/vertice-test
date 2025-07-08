@@ -1,0 +1,11 @@
+{
+  "name": "vertice-test",
+  "version": "1.0.0",
+  "description": "test api service",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Jorge Quintero",
+  "license": "ISC"
+}
