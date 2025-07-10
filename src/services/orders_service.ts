@@ -1,13 +1,14 @@
 import mongoose from 'mongoose';
 import Order, { IOrder } from '../models/Order';
 import Product, { IProduct, IProductUpdate } from '../models/Product';
+import { ApiError } from '../utils/ApiError';
 
 const post = async (
   userId: string,
   productsUpdate: IProductUpdate[],
 ): Promise<any> => {
   if (!productsUpdate.length) {
-    throw new Error('Debes incluir al menos un producto');
+    throw new ApiError(400, 'Debes incluir al menos un producto');
   }
   const validProducts = productsUpdate.filter(
     (p: IProductUpdate) =>
@@ -19,10 +20,13 @@ const post = async (
     },
   });
   if (!products.length) {
-    throw new Error('No se encontraron productos válidos');
+    throw new ApiError(404, 'No se encontraron productos válidos');
   }
   if (products.filter((p) => p.stock == 0).length) {
-    throw new Error('Alguno de los productos no tienen stock disponible');
+    throw new ApiError(
+      400,
+      'Alguno de los productos no tienen stock disponible',
+    );
   }
   if (
     products.filter(
@@ -31,7 +35,8 @@ const post = async (
         validProducts.find((vp) => vp.id === p._id.toString())!.amount,
     ).length
   ) {
-    throw new Error(
+    throw new ApiError(
+      400,
       'Alguno de los productos no tiene suficiente stock para su compra',
     );
   }
