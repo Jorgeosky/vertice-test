@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
 import Product, { IProduct, IProductUpdate } from '../models/Product';
+import { ApiError } from '../utils/ApiError';
 
 const getById = async (productId: string | null): Promise<IProduct> => {
   const product = await Product.findById(productId);
 
   if (!product) {
-    throw new Error('Producto no encontrado');
+    throw new ApiError(404, 'Producto no encontrado');
   }
 
   return product;
@@ -15,7 +16,7 @@ const getAll = async (): Promise<IProduct[]> => {
   const products = await Product.find();
 
   if (!products) {
-    throw new Error('No hay productos actualmente');
+    throw new ApiError(404, 'No hay productos actualmente');
   }
 
   return products;

@@ -1,15 +1,14 @@
 import mongoose from 'mongoose';
-
-const uri = process.env.URI_MONGO || '';
+import ENV from './env';
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(uri);
+    const conn = await mongoose.connect(ENV.URI_MONGO);
     mongoose.set('strictQuery', true);
     console.log(`New connection created to MongoDB: ${conn.connection.host}`);
   } catch (error) {
     console.error(`Error while connecting to Mongo ${error}`);
-    process.exit(1); // Detener la app si no se conecta
+    process.exit(1);
   }
 };
 

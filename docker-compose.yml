@@ -6,7 +6,7 @@ services:
     ports:
       - '3001:3001'
     environment:
-      - MONGO_URI=mongodb://mongo:27017/vertice-test
+      - URI_MONGO=mongodb://mongo:27017/vertice-test
       - JWT_SECRET=patitodeule
       - NODE_ENV=development
       - JWT_EXPIRES_IN=3600

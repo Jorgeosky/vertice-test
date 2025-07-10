@@ -10,15 +10,11 @@ export class OrdersController {
         ...p,
         id: p.id,
       })) as IProductUpdate[];
-      console.log('XD', products);
       const { order, validProductsUpdate } = await ordersService.post(
         req.body.user.id,
         products,
       );
-      console.log('FIN');
-      console.log(validProductsUpdate);
       await productsService.updateBulk(validProductsUpdate);
-      console.log(order);
       res.status(200).json(order);
     } catch (error) {
       next(error);

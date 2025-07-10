@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-
-const secret: jwt.Secret = process.env.JWT_SECRET || '';
+import env from '../config/env';
+import usersService from '../services/users_service';
+import { ApiError } from '../utils/ApiError';
 
 export const authMiddleware = async (
   req: Request,
@@ -18,10 +19,16 @@ export const authMiddleware = async (
   const token = authHeader.split(' ')[1];
 
   try {
-    const decoded = jwt.verify(token, secret) as jwt.JwtPayload;
+    const decoded = jwt.verify(token, env.JWT_SECRET) as jwt.JwtPayload;
+    const user = usersService.get(decoded.userId);
+    if (!user) {
+      throw new ApiError(401, 'Token inválido o expirado');
+    }
     req.body.user = { id: decoded.userId };
     next();
   } catch (error) {
-    res.status(401).json({ message: 'Token inválido o expirado' });
+    res
+      .status(401)
+      .json({ success: false, message: 'Token inválido o expirado' });
   }
 };
