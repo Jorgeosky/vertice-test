@@ -23,7 +23,7 @@ Esta es una API RESTful construida con **Node.js**, **TypeScript** y **MongoDB (
 
 ### 🧾 Órdenes
 
-- `POST /orders` — Crear orden (con múltiples productos y cantidades).
+- `POST /orders` — Crear orden con múltiples productos y cantidades.
 - `GET /orders` — Historial de órdenes del usuario autenticado.
 - Cálculo automático del total por orden.
 
@@ -38,8 +38,10 @@ Esta es una API RESTful construida con **Node.js**, **TypeScript** y **MongoDB (
 - JWT
 - Bcrypt
 - Dotenv
-- Zod (opcional, para validación del entorno)
 
 ---
 
-## 🗂️ Estructura de carpetas
+## Correr el proyecto
+
+primero que nada, clonar el proyecto, usar comando `npm install` luego crear un archivo .env en base al example
+puedes ejecutar el proyecto con docker, o con npm run dev y realizando una conexion exitosa a una base de datos en mongo
